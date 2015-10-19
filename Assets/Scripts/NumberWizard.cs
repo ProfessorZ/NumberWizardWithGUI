@@ -17,24 +17,20 @@ public class NumberWizard : MonoBehaviour {
 	// Use this for initialization
 	void Start ()
 	{
-		setMax (NumberSettings.settings.max);
-		setMin (NumberSettings.settings.min);
+		//sets the values to the settings, or if the settings-scene never got opened, loads the default static values.
+		setMax((NumberSettings.settings != null) ? NumberSettings.settings.max : NumberSettings.defMax);
+		setMin((NumberSettings.settings != null) ? NumberSettings.settings.min : NumberSettings.defMin);
+		setDiff((NumberSettings.settings != null) ?(int)NumberSettings.settings.diff : NumberSettings.defDiff);
+
 		guess = Random.Range (min, max);
 		guessText.text = guess.ToString ();
-		setDiff ((int)NumberSettings.settings.diff);
 		numberguesses = difficulty;
 	}
 
 	// Update is called once per frame
 	void Update ()
 	{
-		if (Input.GetKeyDown (KeyCode.UpArrow)) {
-			print ("Up arrow");
-			guessHigher ();
-		} else if (Input.GetKeyDown (KeyCode.DownArrow)) {
-			print ("Down arrow");
-			guessLower ();
-		}
+
 	}
 	#endregion
 
@@ -45,8 +41,6 @@ public class NumberWizard : MonoBehaviour {
 		guess = Random.Range (min, max);
 		guessText.text = guess.ToString ();
 		numberguesses--;
-		Debug.Log ("number of guesses left:" + numberguesses.ToString ());
-		Debug.Log ("Difficulty: " + getDiff ().ToString () + " -- Min:" + getMin ().ToString () + " -- Max:" + getMax ().ToString ());
 		if (numberguesses <= 0) {
 			Application.LoadLevel ("Win");
 		}

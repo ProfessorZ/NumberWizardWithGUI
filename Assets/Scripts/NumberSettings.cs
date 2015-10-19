@@ -15,7 +15,11 @@ public class NumberSettings : MonoBehaviour {
 	#endregion
 	
 	#region Properties
-	// Default values
+	// Default values (in case the settings-screen never gets opened)
+	public static int defDiff = 10;
+	public static int defMin = 1;
+	public static int defMax = 1000;
+	//modifiable properties
 	public int diff = 10;
 	public int min = 1;
 	public int max = 1000;
