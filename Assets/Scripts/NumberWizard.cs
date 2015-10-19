@@ -3,63 +3,67 @@ using System.Collections;
 using UnityEngine.UI;
 
 public class NumberWizard : MonoBehaviour {
+
+	#region variables
 	int max;
 	int min;
 	int guess;
 	int difficulty;
 	int numberguesses;
 	public Text guessText;
+	#endregion
 
+	#region Start() and Update()
 	// Use this for initialization
-	void Start () {
-		StartGame();
-	}
-
-	void StartGame() {
-		setMax(NumberSettings.settings.max);
-		setMin(NumberSettings.settings.min);
-		guess = Random.Range (min,max);
-		guessText.text = guess.ToString();
-		setDiff((int)NumberSettings.settings.diff);
+	void Start ()
+	{
+		setMax (NumberSettings.settings.max);
+		setMin (NumberSettings.settings.min);
+		guess = Random.Range (min, max);
+		guessText.text = guess.ToString ();
+		setDiff ((int)NumberSettings.settings.diff);
 		numberguesses = difficulty;
-		Debug.Log ("Difficulty: " +getDiff().ToString() + "/" + NumberSettings.settings.diff.ToString() + " -- Min:" + getMin().ToString() + " -- Max:" + getMax().ToString());
 	}
 
-	void NextGuess(){
+	// Update is called once per frame
+	void Update ()
+	{
+		if (Input.GetKeyDown (KeyCode.UpArrow)) {
+			print ("Up arrow");
+			guessHigher ();
+		} else if (Input.GetKeyDown (KeyCode.DownArrow)) {
+			print ("Down arrow");
+			guessLower ();
+		}
+	}
+	#endregion
+
+	#region Functionality
+	void NextGuess ()
+	{
 		//guess = (max+min)/2;
-		guess = Random.Range (min,max);
-		guessText.text = guess.ToString();
+		guess = Random.Range (min, max);
+		guessText.text = guess.ToString ();
 		numberguesses--;
-		Debug.Log ("number of guesses left:" + numberguesses.ToString());
-		Debug.Log ("Difficulty: " +getDiff().ToString() + " -- Min:" + getMin ().ToString() + " -- Max:" + getMax().ToString());
+		Debug.Log ("number of guesses left:" + numberguesses.ToString ());
+		Debug.Log ("Difficulty: " + getDiff ().ToString () + " -- Min:" + getMin ().ToString () + " -- Max:" + getMax ().ToString ());
 		if (numberguesses <= 0) {
 			Application.LoadLevel ("Win");
 		}
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		if(Input.GetKeyDown(KeyCode.UpArrow)) {
-			print("Up arrow");
-			guessHigher();
-		}
-		else if(Input.GetKeyDown(KeyCode.DownArrow)) {
-			print("Down arrow");
-			guessLower ();
-		}
-	}
 
-	public void guessHigher(){
+	public void guessHigher (){
 		min = guess;
-		NextGuess();
+		NextGuess ();
 	}
 
-	public void guessLower(){
+	public void guessLower (){
 		max = guess;
-		NextGuess();
+		NextGuess ();
 	}
+	#endregion
 
-	#region getters and setters
+	#region Modifiers
 	public void setDiff(int diff){
 		numberguesses = diff;
 		difficulty = diff;
@@ -80,6 +84,5 @@ public class NumberWizard : MonoBehaviour {
 		return this.max;
 	}
 	#endregion
-
-
+	
 }

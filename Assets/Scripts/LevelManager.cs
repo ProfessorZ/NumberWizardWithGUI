@@ -5,15 +5,12 @@ public class LevelManager : MonoBehaviour {
 
 	//Load new level, passes along the name of the level to be loaded
 	public void loadNewLevel(string name){
-		Debug.Log ("Level load requested, for:" + name);
 		Application.LoadLevel(name);
-		DontDestroyOnLoad(NumberSettings.settings);
+		DontDestroyOnLoad(NumberSettings.settings);		// Makes sure Settings are saved between the levels.
 	}
 
 	public void quitRequest(){
-		//Debug.Log("Quit requested... should we exit?");
-		Application.Quit ();
-
+		Application.Quit ();							// Quits the game
 	}
 	
 }
