@@ -14,13 +14,15 @@ public class NumberWizard : MonoBehaviour {
 	}
 
 	void StartGame() {
-		max = 1001;
+		max = 1000;
 		min = 1;
-		guess = 500;
+		guess = Random.Range (min,max);
+		guessText.text = guess.ToString();
 	}
 
 	void NextGuess(){
-		guess = (max+min)/2;
+		//guess = (max+min)/2;
+		guess = Random.Range (min,max);
 		guessText.text = guess.ToString();
 		numberguesses--;
 		if (numberguesses <= 0) {
