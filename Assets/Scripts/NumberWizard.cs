@@ -22,7 +22,7 @@ public class NumberWizard : MonoBehaviour {
 		setMin((NumberSettings.settings != null) ? NumberSettings.settings.min : NumberSettings.defMin);
 		setDiff((NumberSettings.settings != null) ?(int)NumberSettings.settings.diff : NumberSettings.defDiff);
 
-		guess = Random.Range (min, max);
+		guess = Random.Range (min, max+1);
 		guessText.text = guess.ToString ();
 		numberguesses = difficulty;
 	}
@@ -38,7 +38,7 @@ public class NumberWizard : MonoBehaviour {
 	void NextGuess ()
 	{
 		//guess = (max+min)/2;
-		guess = Random.Range (min, max);
+		guess = Random.Range (min, max+1);
 		guessText.text = guess.ToString ();
 		numberguesses--;
 		if (numberguesses <= 0) {
