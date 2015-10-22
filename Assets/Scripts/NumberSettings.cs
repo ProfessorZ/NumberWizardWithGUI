@@ -25,17 +25,31 @@ public class NumberSettings : MonoBehaviour {
 	public int max = 1000;
 	#endregion
 
-	#region Start() method
+	#region Start() and Awake() methods
 	// Use this for initialization
 	void Start ()
 	{
-		settings 			= (settings == null) ? this : settings; 	// Instances NumberSettings if it does not yet exist
 
-		diffSlider.value	= int.Parse (settings.diff.ToString ()); 	//
+	}
+
+	// "Properly" implemented Persistent Singleton Pattern
+	// if there is already an instance of NumberSettings, destroy the GameObject which tries to make a new instance.
+	// otherwise, claim the instance and make it persistent through the levels.
+	void Awake(){
+		if (settings != null) {
+			Destroy(gameObject);
+		}
+		else
+		{
+			settings = this;
+			DontDestroyOnLoad(gameObject);
+		}
+		diffSlider.value	= int.Parse (settings.diff.ToString ()); 			//
 		minInput.text 		= settings.min.ToString ();					// All this sets the UI elements to the saved (previously used) values should 
 		maxInput.text 		= settings.max.ToString ();					// they have been changed in a previous playthrough.
 	}
 	#endregion
+
 
 	#region Functionality
 	// Saves the setings
@@ -44,9 +58,6 @@ public class NumberSettings : MonoBehaviour {
 		diff = (int)diffSlider.value;
 		min = Int32.Parse (minInput.text.ToString ());
 		max = Int32.Parse (maxInput.text.ToString ());
-		Debug.Log (settings.diff.ToString ());
-		Debug.Log (settings.min.ToString ());
-		Debug.Log (settings.max.ToString ());
 	}
 
 	// Updates the text-field next to the slider bar in the settings screen
